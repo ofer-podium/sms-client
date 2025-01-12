@@ -1,0 +1,60 @@
+<main>
+  <h1 class="first-heading__title" >Welcome back</h1>
+  <form
+    #loginFormRef="ngForm"
+    class="form__container login__form"
+    [formGroup]="logInForm"
+    (ngSubmit)="sendForm()"
+  >
+    <div class="form-control__container">
+      <sl-input
+        class="input--primary"
+        placeholder="Enter your username"
+        label="Username"
+        size="medium"
+        appSlInputIconFocus
+        required
+        ngDefaultControl
+        [formControl]="username"
+      >
+        <sl-icon name="person-circle" slot="prefix" />
+      </sl-input>
+    </div>
+    <div class="form-control__container">
+      <sl-input
+        type="password"
+        class="input--primary"
+        placeholder="Enter your password"
+        password-toggle
+        label="Password"
+        size="medium"
+        appSlInputIconFocus
+        required
+        ngDefaultControl
+        [attr.help-text]="password.invalid && loginFormRef['submitted'] ? alerts.passwordHelpText : ''"
+        [formControl]="password"
+      >
+        <sl-icon name="lock" slot="prefix" />
+      </sl-input>
+    </div>
+    <div class="form-control__container">
+      <sl-button
+        class="button--primary"
+        size="medium"
+        pill
+        type="submit"
+        [disabled]="isButtonLogInLoading"
+        [attr.loading]="isButtonLogInLoading || null"
+      >
+        <ng-container >Enter</ng-container>
+      </sl-button>
+    </div>
+    <div>
+      <p class="form-footer__paragraph">
+        <a class="form-footer__link" [routerLink]="authUrls.register">
+          <ng-container >Don't have an account yet? Register</ng-container>
+        </a>
+      </p>
+    </div>
+  </form>
+</main>

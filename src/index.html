@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en" class="theme-dark--mode">
+  <head>
+    
+    <script>
+      const THEME_PREFERENCE_LOCAL_STORAGE_KEY = 'themePreference';
+      const DARK_THEME_CLASS_NAME = 'theme-dark--mode';
+      const documentClassList = this.document.documentElement.classList;
+      this.document.documentElement.className = '';
+      documentClassList.add(DARK_THEME_CLASS_NAME);
+    </script>
+
+    <meta charset="utf-8" />
+    <title >SMS - home assignment</title>
+    <base href="/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <meta name="apple-mobile-web-app-title" content="SMS sending app" />
+    <meta name="application-name" content="SMS sending app" />
+    <meta name="theme-color" content="#ffffff" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="SMS sending app" />
+    <meta
+      property="og:description"
+      content="Angular 19 sms sending - home assignment"
+    />
+  </head>
+  <body>
+    <app-root></app-root>
+  </body>
+</html>

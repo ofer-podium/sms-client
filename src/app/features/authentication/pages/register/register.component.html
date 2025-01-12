@@ -1,0 +1,76 @@
+<main>
+  <h1 class="first-heading__title" >Create a new user</h1>
+  <form class="form__container register__form" [formGroup]="registerForm" (ngSubmit)="sendForm()">
+    
+    <!-- Username -->
+    <div class="form-control__container">
+      <sl-input
+        class="input--primary"
+        placeholder="Enter a username"
+        label="username"
+        size="medium"
+        appSlInputIconFocus
+        required
+        ngDefaultControl
+        [formControl]="username"
+      >
+        <sl-icon name="person-circle" slot="prefix" />
+      </sl-input>
+    </div>
+
+    <!-- Password -->
+    <div class="form-control__container">
+      <sl-input
+        type="password"
+        class="input--primary"
+        placeholder="Enter your password"
+        password-toggle
+        label="Password"
+        size="medium"
+        appSlInputIconFocus
+        required
+        ngDefaultControl
+        [formControl]="password"
+      >
+        <sl-icon name="lock" slot="prefix" />
+      </sl-input>
+    </div>
+    <div class="form-control__container">
+      <sl-input
+        type="password"
+        class="input--primary"
+        placeholder="Retype the password"
+        password-toggle
+        label="Confirm password"
+        size="medium"
+        appSlInputIconFocus
+        required
+        ngDefaultControl
+        [formControl]="confirmPassword"
+      >
+        <sl-icon name="lock" slot="prefix" />
+      </sl-input>
+    </div>
+    
+    <div class="form-control__container">
+      <sl-button
+        class="button--primary"
+        size="medium"
+        pill
+        type="submit"
+        [disabled]="isButtonRegisterLoading"
+        
+        [attr.loading]="isButtonRegisterLoading || null"
+      >
+        <ng-container >Create account</ng-container>
+      </sl-button>
+    </div>
+    <div>
+      <p class="form-footer__paragraph">
+        <a class="form-footer__link" [routerLink]="authUrls.logIn">
+          <ng-container >Do you have an account? Log in</ng-container>
+        </a>
+      </p>
+    </div>
+  </form>
+</main>

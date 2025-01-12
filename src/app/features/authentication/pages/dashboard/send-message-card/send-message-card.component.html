@@ -1,0 +1,55 @@
+<div class="send-message-card__container">
+  <h1 class="send-message-card__title">Send a Message</h1>
+  <form [formGroup]="messageForm" (ngSubmit)="sendMessage()" class="send-message-card__form">
+    <!-- Country Code Dropdown -->
+    <div class="form-control__container">
+      <label for="countryCode" class="form-control__label">Country Code</label>
+      <select
+        id="countryCode"
+        class="form-control__select"
+        formControlName="countryCode"
+      >
+        <option value="+1">🇺🇸 USA (+1)</option>
+        <option value="+972">🇮🇱 Israel (+972)</option>
+        <option value="+44">🇬🇧 UK (+44)</option>
+        <option value="+91">🇮🇳 India (+91)</option>
+        <option value="+61">🇦🇺 Australia (+61)</option>
+      </select>
+    </div>
+
+    <!-- Phone Number -->
+    <div class="form-control__container">
+      <label for="phoneNumber" class="form-control__label">Phone Number</label>
+      <input
+        id="phoneNumber"
+        type="text"
+        class="form-control__input"
+        placeholder="Enter phone number"
+        formControlName="phoneNumber"
+      />
+    </div>
+
+    <!-- Message Content -->
+    <div class="form-control__container">
+      <label for="messageContent" class="form-control__label">Message</label>
+      <textarea
+        id="messageContent"
+        rows="4"
+        class="form-control__textarea"
+        placeholder="Enter your message (max 250 characters)"
+        formControlName="messageContent"
+      ></textarea>
+    </div>
+
+    <!-- Submit Button -->
+    <div class="form-control__container">
+      <button
+        type="submit"
+        class="form-control__button"
+        [disabled]="messageForm.invalid"
+      >
+        Send
+      </button>
+    </div>
+  </form>
+</div>

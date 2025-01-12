@@ -1,0 +1,24 @@
+
+<main>
+<h1 class="first-heading__title" >My Messages</h1>
+<div class="messages-page">
+
+  <div class="messages-container">
+    <div class="send-message-container">
+      <app-send-message-card></app-send-message-card>
+    </div>
+
+<div class="messages-list">
+  <h2>Message History</h2>
+  <ul>
+    @for (message of messages; track message.id) {
+      <li>
+        <app-message [message]="message"></app-message>
+      </li>
+    }      
+  </ul>
+</div>
+</div>
+</div>
+
+</main>
