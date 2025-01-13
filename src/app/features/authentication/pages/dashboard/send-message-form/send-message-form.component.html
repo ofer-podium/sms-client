@@ -9,18 +9,18 @@
         class="form-control__select"
         formControlName="countryCode"
       >
-        <option value="+1">🇺🇸 USA (+1)</option>
-        <option value="+972">🇮🇱 Israel (+972)</option>
-        <option value="+44">🇬🇧 UK (+44)</option>
-        <option value="+91">🇮🇳 India (+91)</option>
-        <option value="+61">🇦🇺 Australia (+61)</option>
+        <option value="+1" disabled>🇺🇸 USA (+1)</option>
+        <option value="+972"  >🇮🇱 Israel (+972)</option>
+        <option value="+44" disabled >🇬🇧 UK (+44)</option>
+        <option value="+91" disabled >🇮🇳 India (+91)</option>
+        <option value="+61" disabled >🇦🇺 Australia (+61)</option>
       </select>
     </div>
 
-    <!-- Phone Number -->
     <div class="form-control__container">
       <label for="phoneNumber" class="form-control__label">Phone Number</label>
       <input
+        readonly
         id="phoneNumber"
         type="text"
         class="form-control__input"
@@ -29,26 +29,42 @@
       />
     </div>
 
-    <!-- Message Content -->
     <div class="form-control__container">
       <label for="messageContent" class="form-control__label">Message</label>
       <textarea
         id="messageContent"
         rows="4"
-        class="form-control__textarea"
+        class="form-control__textarea no-resize"
         placeholder="Enter your message (max 250 characters)"
         formControlName="messageContent"
+        (input)="enforceMaxLength()"
+        (keydown)="handleEnterKey($event)"
       ></textarea>
+      <small class="char-counter">
+        {{ remainingChars }} characters remaining
+      </small>
     </div>
 
     <!-- Submit Button -->
-    <div class="form-control__container">
+    <!-- <div class="form-control__container">
       <button
         type="submit"
         class="form-control__button"
         [disabled]="messageForm.invalid"
       >
         Send
+      </button>
+    </div> -->
+    <div class="form-control__container">
+      <button
+        type="submit"
+        class="form-control__button"
+        [disabled]="messageForm.invalid || isSubmitting"
+      >
+        <span *ngIf="!isSubmitting">Send</span>
+        <span *ngIf="isSubmitting">
+          <div class="loader"></div>
+        </span>
       </button>
     </div>
   </form>

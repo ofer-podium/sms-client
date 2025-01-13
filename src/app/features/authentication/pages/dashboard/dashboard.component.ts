@@ -7,7 +7,7 @@ import {
   ChangeDetectorRef,
 } from '@angular/core';
 import { MessageComponent } from './message/message.component';
-import { SendMessageCardComponent } from './send-message-card/send-message-card.component';
+import { SendMessageFormComponent } from './send-message-form/send-message-form.component';
 import { Message } from '~core/types/message.type';
 import { MessageService } from '~features/authentication/services/message.service';
 import { PubNubService } from '~features/authentication/services/pubnub.service';
@@ -17,7 +17,7 @@ import { AuthenticationService } from '~features/authentication/services/authent
   selector: 'app-messages-page',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
-  imports: [MessageComponent, SendMessageCardComponent],
+  imports: [MessageComponent, SendMessageFormComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

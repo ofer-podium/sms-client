@@ -7,6 +7,24 @@
   max-width: 400px;
   margin: 0 auto;
 
+  .char-counter {
+    display: block;
+    font-size: 12px;
+    margin-top: 4px;
+    color: #555;
+    text-align: right;
+  }
+
+.loader {
+  border: 3px solid #f3f3f3; /* Light grey */
+  border-top: 3px solid #3498db; /* Blue */
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  animation: spin 1s linear infinite;
+  margin: 0 auto;
+}
+
   .send-message-card__title {
     font-size: 1.5rem;
     margin-bottom: 16px;
@@ -38,6 +56,7 @@
       border-radius: 4px;
       padding: 8px;
       font-size: 1rem;
+      resize: none; // Disable resizing
 
       &:focus {
         outline: none;
