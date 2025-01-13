@@ -29,8 +29,8 @@ export class MessagesPageComponent implements OnInit {
 
   messages: Message[] = [];
   totalMessages = 0;
-  currentPage = 1;
-  pageSize = 5;
+  page = 1;
+  limit = 5;
 
   ngOnInit() {
     this.subscribeToChannel();
@@ -39,10 +39,10 @@ export class MessagesPageComponent implements OnInit {
   }
 
   loadMessages() {
-    this.messageService.getMessages(this.currentPage, this.pageSize).subscribe({
+    this.messageService.getMessages(this.page, this.limit).subscribe({
       next: (response) => {
         this.messages = response.messages;
-        this.totalMessages = response.total || 100;
+        this.totalMessages = response.total;
         this.changeDetectorRef.markForCheck();
       },
       error: (error) => {
@@ -76,6 +76,7 @@ export class MessagesPageComponent implements OnInit {
     }
 
     if (!existingMessage) {
+      this.totalMessages++;
       this.messages.unshift({
         id: message.id,
         sid: message.sid,

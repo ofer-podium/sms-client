@@ -28,12 +28,12 @@ export class MessageService {
       );
   }
 
-  getMessages(page: number, pageSize: number): Observable<{ messages: Message[]; total: number }> {
+  getMessages(page: number, limit: number): Observable<{ messages: Message[]; total: number }> {
     const getMessagesEndpoint = `${this.apiUrl}/api/messages/user_messages`;
     return this.httpClient.get<{ messages: Message[]; total: number }>(getMessagesEndpoint, {
       params: {
         page: page.toString(),
-        pageSize: pageSize.toString(),
+        limit: limit.toString(),
       },
     });
   }

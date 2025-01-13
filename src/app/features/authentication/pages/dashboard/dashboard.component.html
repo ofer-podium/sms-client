@@ -9,7 +9,9 @@
     </div>
 
 <div class="messages-list">
-  <h2>Message History</h2>
+  <div class="messages-list__total">
+    <span>Showing {{ messages.length }} of {{ totalMessages }} total messages in your history.</span>
+  </div>
   <ul>
     @for (message of messages; track message.id) {
       <li>
