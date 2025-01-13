@@ -12,7 +12,5 @@ import { Message } from '~core/types/message.type';
 export class MessageComponent {
   @Input() message!: Message;
 
-  ngOnChanges() {
-    console.log('Message received in MessageComponent:', this.message);
-  }
+  ngOnChanges() {}
 }

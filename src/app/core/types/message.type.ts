@@ -1,7 +1,8 @@
 export type Message = {
-  id: number;
+  id: string;
   content: string;
   recipient_phone: string;
   sent_at: Date;
   status: string;
+  sid: string;
 };

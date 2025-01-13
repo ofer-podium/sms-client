@@ -14,6 +14,7 @@ import { SlInputIconFocusDirective } from '~core/directives/sl-input-icon-focus.
 import { alerts } from '../../../../core/constants/alerts.constants';
 import { AlertService } from '~core/services/alert.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { PubNubService } from '~features/authentication/services/pubnub.service'; // Import PubNubService
 import type { User } from '~core/types/user.type';
 
 @Component({
@@ -28,6 +29,7 @@ export class LogInComponent {
   private readonly changeDetectorRef = inject(ChangeDetectorRef);
   private readonly alertService = inject(AlertService);
   private readonly router = inject(Router);
+  private readonly pubNubService = inject(PubNubService); // Inject PubNubService
 
   private readonly formBuilder = inject(FormBuilder);
   private readonly authService = inject(AuthenticationService);
@@ -61,6 +63,10 @@ export class LogInComponent {
         .subscribe({
           next: (user: User) => {
             this.isButtonLogInLoading = false;
+            if (user.channel) {
+              this.pubNubService.subscribe(`${user.channel}`);
+            }
+
             this.changeDetectorRef.markForCheck();
             void this.router.navigate([ROOT_URLS.messages]);
           },

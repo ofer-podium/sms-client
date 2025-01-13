@@ -1,3 +1,3 @@
 export const environment = {
-  apiBaseUrl: 'https://nestjs-example-app.fly.dev',
+  apiBaseUrl: 'https://sms-sender-back.onrender.com',
 };

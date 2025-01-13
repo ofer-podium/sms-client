@@ -6,16 +6,11 @@ import { map } from 'rxjs';
 import type { LoginRequest } from '~core/types/login-request.type';
 import { environment } from '~environments/environment';
 import type { LoginResponse } from '~core/types/login-response.type';
-import type {
-  RefreshTokenResponse,
-  RefreshTokenResponseData,
-} from '~core/types/refresh-token.response.type';
 import type { RegisterRequest } from '~core/types/register-request.type';
 import type { RegisterResponse, RegisterResponseData } from '~core/types/register-response.type';
 import type { User } from '~core/types/user.type';
 
 export const ACCESS_TOKEN_KEY = 'access-token';
-export const REFRESH_TOKEN_KEY = 'refresh-token';
 
 @Injectable({
   providedIn: 'root',
@@ -37,7 +32,7 @@ export class AuthenticationService {
       .pipe(
         map((response: RegisterResponse) => {
           const { data } = response;
-          this.saveTokens(data);
+          this.saveToken(data);
           this.isUserLoggedInSignal.set(true);
           return data;
         }),
@@ -55,29 +50,14 @@ export class AuthenticationService {
         map((response: LoginResponse) => {
           this.isUserLoggedInSignal.set(true);
           const { data } = response;
-          this.saveTokens(data);
+          this.saveToken(data);
           return data.user;
         }),
       );
   }
 
-  refreshToken(): Observable<RefreshTokenResponseData> {
-    const refreshTokenEndpoint = `${this.apiUrl}/v1/authentication/token/refresh`;
-    return this.httpClient
-      .post<RefreshTokenResponse>(refreshTokenEndpoint, {
-        refreshToken: this.storageService?.getItem(REFRESH_TOKEN_KEY),
-      })
-      .pipe(
-        map((response: RefreshTokenResponse) => {
-          const { data } = response;
-          this.saveTokens(data);
-          return data;
-        }),
-      );
-  }
-
   logOut() {
-    this.removeTokens();
+    this.removeToken();
     this.isUserLoggedInSignal.set(false);
   }
 
@@ -85,15 +65,11 @@ export class AuthenticationService {
     return this.isUserLoggedInSignal();
   }
 
-  private saveTokens(data: { accessToken: string; refreshToken?: string }) {
+  private saveToken(data: { accessToken: string; refreshToken?: string }) {
     this.storageService?.setItem(ACCESS_TOKEN_KEY, data.accessToken);
-    if (data.refreshToken) {
-      this.storageService?.setItem(REFRESH_TOKEN_KEY, data.refreshToken);
-    }
   }
 
-  private removeTokens() {
+  private removeToken() {
     this.storageService?.removeItem(ACCESS_TOKEN_KEY);
-    this.storageService?.removeItem(REFRESH_TOKEN_KEY);
   }
 }
