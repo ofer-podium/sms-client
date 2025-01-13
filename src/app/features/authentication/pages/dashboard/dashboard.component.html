@@ -1,4 +1,4 @@
-
+<!-- 
 <main>
 <h1 class="first-heading__title" >My Messages</h1>
 <div class="messages-page">
@@ -23,4 +23,35 @@
 </div>
 </div>
 
+</main> -->
+
+<main>
+  <h1 class="first-heading__title">My Messages</h1>
+  <div class="messages-page">
+    <div class="messages-container">
+      <div class="send-message-container">
+        <app-send-message-form></app-send-message-form>
+      </div>
+
+      <div class="messages-list">
+        <div class="messages-list__total">
+          <span>Showing {{ messages.length }} of {{ totalMessages }} total messages in your history.</span>
+        </div>
+        <ul>
+          @for (message of messages; track message.id) {
+          <li>
+            <app-message [message]="message"></app-message>
+          </li>
+          }
+        </ul>
+        <button 
+          class="form-control__button" 
+          (click)="loadMoreMessages()" 
+          [disabled]="messages.length >= totalMessages"
+        >
+          Load More
+        </button>
+      </div>
+    </div>
+  </div>
 </main>

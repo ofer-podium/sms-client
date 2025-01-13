@@ -33,9 +33,16 @@ export class MessagesPageComponent implements OnInit {
   limit = 5;
 
   ngOnInit() {
+    this.clearPagination();
     this.subscribeToChannel();
     this.loadMessages();
     this.listenToMessages();
+  }
+
+  clearPagination() {
+    this.totalMessages = 0;
+    this.page = 1;
+    this.limit = 5;
   }
 
   loadMessages() {
@@ -47,6 +54,25 @@ export class MessagesPageComponent implements OnInit {
       },
       error: (error) => {
         console.error('Failed to fetch messages', error);
+      },
+    });
+  }
+
+  loadMoreMessages() {
+    if (this.messages.length >= this.totalMessages) {
+      console.log('No more messages to load.');
+      return;
+    }
+
+    this.page++; // Increment the page number
+    this.messageService.getMessages(this.page, this.limit).subscribe({
+      next: (response) => {
+        this.messages = [...this.messages, ...response.messages]; // Append new messages
+        this.totalMessages = response.total;
+        this.changeDetectorRef.markForCheck();
+      },
+      error: (error) => {
+        console.error('Failed to fetch more messages', error);
       },
     });
   }
