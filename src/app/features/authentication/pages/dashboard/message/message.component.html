@@ -1,4 +1,4 @@
-<div class="message">
+<!-- <div class="message">
   <div class="message-header">
     <span class="recipient-phone">To: {{ message.recipient_phone }}</span>
     <span class="sent-at">{{ message.sent_at | date: 'medium' }}</span>
@@ -6,5 +6,16 @@
   <p class="content">{{ message.content }}</p>
   <div class="message-footer">
     <span class="status">Status: {{ message.status }}</span>
+  </div>
+</div> -->
+
+<div class="message">
+  <div class="message-header">
+    <span class="recipient-phone">To: {{ message.recipient_phone }}</span>
+    <span class="sent-at">{{ message.sent_at | date: 'medium' }}</span>
+  </div>
+  <p class="content">{{ message.content }}</p>
+  <div class="message-footer">
+    <span class="status" [ngClass]="getStatusClass()">Status: {{ message.status }}</span>
   </div>
 </div>
