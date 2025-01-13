@@ -22,9 +22,7 @@
             "outputPath": "dist/angularexampleapp",
             "index": "src/index.html",
             "browser": "src/main.ts",
-            // "polyfills": ["@angular/localize/init"],
             "tsConfig": "tsconfig.app.json",
-            // "i18nMissingTranslation": "warning",
             "inlineStyleLanguage": "scss",
             "assets": [
               {

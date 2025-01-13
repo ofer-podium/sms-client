@@ -13,7 +13,7 @@
     "e2e": "npm run playwright:install && npm run playwright:test",
     "playwright:install": "npx playwright install && npx playwright install-deps",
     "playwright:test": "playwright test",
-    "build": "ng build && mv -v dist/angularexampleapp/browser/en/* dist/angularexampleapp/browser/ && rm -Rf dist/angularexampleapp/browser/en",
+    "build": "ng build --configuration production",
     "bundle-report": "ng build --configuration=production-sourcemaps && source-map-explorer dist/angularexampleapp/browser/**/*.js",
     "release:patch": "standard-version --release-as patch && git push --follow-tags origin master",
     "release:minor": "standard-version --release-as minor && git push --follow-tags origin master",
