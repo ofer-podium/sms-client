@@ -19,7 +19,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/angularexampleapp",
+            "outputPath": "dist/ofersmsapp",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": ["@angular/localize/init"],
@@ -63,23 +63,11 @@
                   "with": "src/environments/environment.production.ts"
                 }
               ],
-              "outputHashing": "all",
-              "localize": ["es", "en"]
+              "outputHashing": "all"
             },
             "production-sourcemaps": {
               "sourceMap": true,
               "outputHashing": "all"
-            },
-            "development-en": {
-              "optimization": false,
-              "extractLicenses": false,
-              "sourceMap": true
-            },
-            "development-es": {
-              "optimization": false,
-              "extractLicenses": false,
-              "sourceMap": true,
-              "localize": ["es"]
             }
           },
           "defaultConfiguration": "production"
@@ -88,13 +76,13 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "angularexampleapp:build:production"
+              "buildTarget": "ofersmsapp:build:production"
             },
             "development-en": {
-              "buildTarget": "angularexampleapp:build:development-en"
+              "buildTarget": "ofersmsapp:build:development-en"
             },
             "development-es": {
-              "buildTarget": "angularexampleapp:build:development-es"
+              "buildTarget": "ofersmsapp:build:development-es"
             }
           },
           "defaultConfiguration": "development-en"
