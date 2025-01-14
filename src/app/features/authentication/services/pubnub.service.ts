@@ -19,7 +19,6 @@ export class PubNubService {
 
     this.pubnub.addListener({
       message: (event) => {
-        console.log(`Received message on channel ${event.channel}:`, event.message);
         this.messageSubject.next({ channel: event.channel, message: event.message });
       },
     });
@@ -27,7 +26,6 @@ export class PubNubService {
 
   subscribe(channel: string): void {
     this.pubnub.subscribe({ channels: [channel] });
-    console.log(`Subscribed to channel: ${channel}`);
   }
 
   unsubscribe(channel: string): void {
