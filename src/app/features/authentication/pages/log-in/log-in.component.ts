@@ -63,7 +63,7 @@ export class LogInComponent {
           error: (response) => {
             this.isButtonLogInLoading = false;
 
-            let errorMessage = alerts.genericErrorAlert;
+            let errorMessage = alerts.wrongCredentialsError;
             if (response.error.internalCode === 2002) {
               errorMessage = alerts.loginCredentialsError;
             }
