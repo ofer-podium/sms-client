@@ -1,5 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { DestroyRef } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import {
   FormBuilder,
@@ -9,6 +11,8 @@ import {
   Validators,
 } from '@angular/forms';
 import { MessageService } from '~features/authentication/services/message.service';
+import { AlertService } from '~core/services/alert.service';
+import { alerts } from '~core/constants/alerts.constants';
 
 @Component({
   selector: 'app-send-message-form',
@@ -20,6 +24,8 @@ import { MessageService } from '~features/authentication/services/message.servic
 export class SendMessageFormComponent {
   @Input() defaultCountryCode = '+972';
   private readonly messageService = inject(MessageService);
+  private readonly alertService = inject(AlertService);
+  private readonly destroyRef = inject(DestroyRef);
 
   messageForm: FormGroup;
   isSubmitting = false;
@@ -58,23 +64,27 @@ export class SendMessageFormComponent {
 
   sendMessage() {
     if (this.messageForm.valid && !this.isSubmitting) {
-      this.isSubmitting = true; // Prevent further submissions
+      this.isSubmitting = true;
       this.messageForm.markAllAsTouched();
       const { countryCode, phoneNumber, messageContent } = this.messageForm.value;
 
-      this.messageService.sendMessage(`${countryCode}${phoneNumber}`, messageContent).subscribe({
-        next: () => {
-          this.messageForm.reset({
-            countryCode: this.defaultCountryCode,
-            phoneNumber: '526305081',
-          });
-          this.isSubmitting = false;
-        },
-        error: (error) => {
-          console.error('SendMessage Error:', error);
-          this.isSubmitting = false;
-        },
-      });
+      this.messageService
+        .sendMessage(`${countryCode}${phoneNumber}`, messageContent)
+        .pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe({
+          next: () => {
+            this.alertService.createSuccessAlert(alerts.messageSentSuccess);
+            this.messageForm.reset({
+              countryCode: this.defaultCountryCode,
+              phoneNumber: '526305081',
+            });
+            this.isSubmitting = false;
+          },
+          error: (error) => {
+            this.alertService.createErrorAlert(alerts.messageSentFailure);
+            this.isSubmitting = false;
+          },
+        });
     }
   }
 }

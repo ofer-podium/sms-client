@@ -1,13 +1,10 @@
-@use 'base/media-queries' as mq;
-
-$page-max-width: 2560px;
-
 :host {
   display: flex;
   flex-direction: row;
   align-items: flex-start;
   min-height: 100vh;
   margin-inline: auto;
+  overflow: hidden;
 
   .app__main-container {
     display: flex;
@@ -17,6 +14,8 @@ $page-max-width: 2560px;
 
     .app__page-container {
       display: grid;
+      flex-grow: 1; 
+      min-height: 100%; 
     }
   }
 }

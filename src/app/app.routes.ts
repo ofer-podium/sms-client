@@ -3,7 +3,7 @@ import { Error404Component } from '~core/components/error-404/error-404.componen
 import type { Route } from '@angular/router';
 import { HomeComponent } from '~features/home/home.component';
 import { authenticationGuard } from '~core/guards/authentication.guard';
-import { MessagesPageComponent } from '~features/authentication/pages/dashboard/dashboard.component';
+import { MessagesPageComponent } from '~features/dashboard/dashboard.component';
 
 export const appRoutes: Route[] = [
   {

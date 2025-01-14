@@ -23,7 +23,7 @@ export class AlertService {
   }
 
   createSuccessAlert(message: string) {
-    this.createAlert({ message, type: AlertType.SUCCESS, duration: 7000, hasCountdown: true });
+    this.createAlert({ message, type: AlertType.SUCCESS, duration: 5000, hasCountdown: true });
   }
 
   createErrorAlert(message: string) {

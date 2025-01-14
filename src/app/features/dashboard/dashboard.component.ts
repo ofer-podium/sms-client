@@ -12,6 +12,10 @@ import { Message } from '~core/types/message.type';
 import { MessageService } from '~features/authentication/services/message.service';
 import { PubNubService } from '~features/authentication/services/pubnub.service';
 import { AuthenticationService } from '~features/authentication/services/authentication.service';
+import { AlertService } from '~core/services/alert.service';
+import { alerts } from '~core/constants/alerts.constants';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { DestroyRef } from '@angular/core';
 
 @Component({
   selector: 'app-messages-page',
@@ -26,6 +30,8 @@ export class MessagesPageComponent implements OnInit {
   private readonly pubNubService = inject(PubNubService);
   private readonly messageService = inject(MessageService);
   private readonly changeDetectorRef = inject(ChangeDetectorRef);
+  private readonly alertService = inject(AlertService);
+  private readonly destroyRef = inject(DestroyRef);
 
   messages: Message[] = [];
   totalMessages = 0;
@@ -39,6 +45,13 @@ export class MessagesPageComponent implements OnInit {
     this.listenToMessages();
   }
 
+  ngOnDestroy() {
+    const channel = this.authService.getUserChannel();
+    if (channel) {
+      this.pubNubService.unsubscribe(channel);
+    }
+  }
+
   clearPagination() {
     this.totalMessages = 0;
     this.page = 1;
@@ -46,21 +59,23 @@ export class MessagesPageComponent implements OnInit {
   }
 
   loadMessages() {
-    this.messageService.getMessages(this.page, this.limit).subscribe({
-      next: (response) => {
-        this.messages = response.messages;
-        this.totalMessages = response.total;
-        this.changeDetectorRef.markForCheck();
-      },
-      error: (error) => {
-        console.error('Failed to fetch messages', error);
-      },
-    });
+    this.messageService
+      .getMessages(this.page, this.limit)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (response) => {
+          this.messages = response.messages;
+          this.totalMessages = response.total;
+          this.changeDetectorRef.markForCheck();
+        },
+        error: (error) => {
+          console.error('Failed to fetch messages', error);
+          this.alertService.createErrorAlert(alerts.messagesFetchError);
+        },
+      });
   }
-
   loadMoreMessages() {
     if (this.messages.length >= this.totalMessages) {
-      console.log('No more messages to load.');
       return;
     }
 
@@ -81,15 +96,16 @@ export class MessagesPageComponent implements OnInit {
     const channel = this.authService.getUserChannel();
     if (channel) {
       this.pubNubService.subscribe(channel);
-    } else {
-      console.error('No channel found for the user.');
     }
   }
 
   private listenToMessages() {
-    this.pubNubService.onMessage().subscribe(({ message }) => {
-      this.updateMessages(message);
-    });
+    this.pubNubService
+      .onMessage()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(({ message }) => {
+        this.updateMessages(message);
+      });
   }
 
   private updateMessages(message: Message): void {

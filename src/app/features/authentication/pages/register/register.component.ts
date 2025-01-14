@@ -22,6 +22,7 @@ import '@shoelace-style/shoelace/dist/components/icon/icon.js';
 import '@shoelace-style/shoelace/dist/components/checkbox/checkbox.js';
 import { AlertService } from '~core/services/alert.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { usernameValidator } from '~core/validators/username.validator';
 
 @Component({
   selector: 'app-register',
@@ -42,20 +43,11 @@ export class RegisterComponent implements OnInit {
   alerts = alerts;
   authUrls = AUTH_URLS;
   name = new FormControl('', [Validators.required, Validators.minLength(2)]);
-  username = new FormControl('', [
-    Validators.required,
-    Validators.minLength(4),
-    Validators.maxLength(20),
-  ]);
 
-  password = new FormControl('', {
+  username = new FormControl<string>('', [usernameValidator()]);
+  password = new FormControl<string>('', [passwordValidator()]);
+  confirmPassword = new FormControl<string>('', {
     validators: [Validators.required, passwordValidator()],
-    updateOn: 'change',
-  });
-
-  confirmPassword = new FormControl('', {
-    validators: [Validators.required, passwordValidator()],
-    updateOn: 'change',
   });
 
   registerForm = this.formBuilder.group({

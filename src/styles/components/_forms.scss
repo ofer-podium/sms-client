@@ -10,21 +10,6 @@
       padding: var(--spacing-r-6xl) var(--spacing-r-xl);
     }
 
-    // .form-control__container {
-    //   margin-block: var(--spacing-r-3xl);
-    //   .button--primary {
-    //     margin-block-start: var(--spacing-r-md);
-    //   }
-
-    //   &:first-of-type {
-    //     margin-block-start: 0;
-    //   }
-
-    //   @include mq.for-tablet-up {
-    //     margin-block: var(--spacing-r-3xl);
-    //   }
-    // }
-
     .form-control__container {
       margin-block: 2rem; // Default spacing for block-level elements (var(--spacing-r-3xl))
       

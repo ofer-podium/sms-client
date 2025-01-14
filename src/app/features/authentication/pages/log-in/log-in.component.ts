@@ -14,8 +14,9 @@ import { SlInputIconFocusDirective } from '~core/directives/sl-input-icon-focus.
 import { alerts } from '../../../../core/constants/alerts.constants';
 import { AlertService } from '~core/services/alert.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { PubNubService } from '~features/authentication/services/pubnub.service'; // Import PubNubService
 import type { User } from '~core/types/user.type';
+import { passwordValidator } from '~core/validators/password.validator';
+import { usernameValidator } from '~core/validators/username.validator';
 
 @Component({
   selector: 'app-log-in',
@@ -29,7 +30,6 @@ export class LogInComponent {
   private readonly changeDetectorRef = inject(ChangeDetectorRef);
   private readonly alertService = inject(AlertService);
   private readonly router = inject(Router);
-  private readonly pubNubService = inject(PubNubService); // Inject PubNubService
 
   private readonly formBuilder = inject(FormBuilder);
   private readonly authService = inject(AuthenticationService);
@@ -38,13 +38,9 @@ export class LogInComponent {
   alerts = alerts;
   authUrls = AUTH_URLS;
 
-  username = new FormControl<string>('', [
-    Validators.required,
-    Validators.minLength(4),
-    Validators.maxLength(20),
-  ]);
+  username = new FormControl<string>('', [usernameValidator()]);
+  password = new FormControl<string>('', [passwordValidator()]);
 
-  password = new FormControl<string>('', [Validators.required, Validators.minLength(6)]);
   logInForm = this.formBuilder.group({
     username: this.username,
     password: this.password,
@@ -61,18 +57,12 @@ export class LogInComponent {
         .logIn({ username: formValue.username!, password: formValue.password! })
         .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe({
-          next: (user: User) => {
+          next: () => {
             this.isButtonLogInLoading = false;
-            if (user.channel) {
-              this.pubNubService.subscribe(`${user.channel}`);
-            }
-
             this.changeDetectorRef.markForCheck();
             void this.router.navigate([ROOT_URLS.messages]);
           },
           error: (response) => {
-            console.log(response);
-
             this.isButtonLogInLoading = false;
 
             let errorMessage = alerts.genericErrorAlert;

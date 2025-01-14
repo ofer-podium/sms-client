@@ -1,6 +1,9 @@
 @use 'base/media-queries' as mq;
 @use 'components/pages';
 
+.first-heading__title{
+  margin: var(--spacing-r-3xl);
+}
 
 .messages-page {
   display: flex;
@@ -10,6 +13,7 @@
   margin: 0 auto;
   font-family: Arial, sans-serif;
   color: #f9f9f9;
+  
 
   .form-control__button {
     background-color: #007bff; // Button color
