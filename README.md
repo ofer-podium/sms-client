@@ -11,7 +11,3 @@ An Angular application for managing SMS communications.
 ## Description
 
 This Angular client serves as a GUI for managing user interactions, sending messages, fetching message history, and listening to real-time updates such as presence events.
-
-## License
-
-This project is licensed under the MIT License.
