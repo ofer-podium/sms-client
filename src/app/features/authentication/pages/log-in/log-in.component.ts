@@ -10,11 +10,9 @@ import { Router, RouterModule } from '@angular/router';
 import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AUTH_URLS, ROOT_URLS } from '~core/constants/urls.constants';
 import { AuthenticationService } from '~features/authentication/services/authentication.service';
-import { SlInputIconFocusDirective } from '~core/directives/sl-input-icon-focus.directive';
 import { alerts } from '../../../../core/constants/alerts.constants';
 import { AlertService } from '~core/services/alert.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import type { User } from '~core/types/user.type';
 import { passwordValidator } from '~core/validators/password.validator';
 import { usernameValidator } from '~core/validators/username.validator';
 
@@ -23,7 +21,7 @@ import { usernameValidator } from '~core/validators/username.validator';
   templateUrl: './log-in.component.html',
   styleUrl: './log-in.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ReactiveFormsModule, RouterModule, SlInputIconFocusDirective],
+  imports: [ReactiveFormsModule, RouterModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class LogInComponent {

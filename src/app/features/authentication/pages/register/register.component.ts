@@ -11,7 +11,6 @@ import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angu
 import { Router, RouterModule } from '@angular/router';
 import { AUTH_URLS, ROOT_URLS } from '~core/constants/urls.constants';
 import { passwordValidator } from '~core/validators/password.validator';
-import { SlInputIconFocusDirective } from '~core/directives/sl-input-icon-focus.directive';
 import { alerts } from '../../../../../app/core/constants/alerts.constants';
 import { merge } from 'rxjs';
 import { AuthenticationService } from '~features/authentication/services/authentication.service';
@@ -29,7 +28,7 @@ import { usernameValidator } from '~core/validators/username.validator';
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [RouterModule, ReactiveFormsModule, SlInputIconFocusDirective],
+  imports: [RouterModule, ReactiveFormsModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class RegisterComponent implements OnInit {

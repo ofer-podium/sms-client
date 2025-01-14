@@ -21,7 +21,6 @@ export const appConfig: ApplicationConfig = {
     provideExperimentalZonelessChangeDetection(),
     provideRouter(
       appRoutes,
-      withInMemoryScrolling(),
       withViewTransitions({
         onViewTransitionCreated: ({ transition, to }) => {
           const router = inject(Router);
