@@ -6,6 +6,16 @@
   font-family: "Inter", sans-serif;
   color: var(--gray-900);
 
+  a {
+    text-decoration: none; /* Removes underline */
+    color: inherit; /* Makes the link inherit the text color from its parent */
+  }
+  
+  a:hover {
+    color: #007bff; /* Optional: Add a hover color for better user experience */
+    text-decoration: none; /* Ensures no underline on hover */
+  }
+  
   .app-info__header {
     text-align: center;
     margin-bottom: 2rem;
